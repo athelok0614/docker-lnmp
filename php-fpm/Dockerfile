@@ -57,7 +57,11 @@ RUN docker-php-ext-install \
         pdo_mysql \
         mysqli \
         sockets \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && if [ ${PHP_VERSION} = "7.4" ]; then \
+        docker-php-ext-configure gd --with-freetype --with-jpeg \
+    else \
+        docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include  \
+    ;fi \
     && docker-php-ext-install gd
 
 
@@ -120,6 +124,7 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     && docker-php-ext-enable memcached \
 ;fi
 
+RUN pecl install xdebug-3.0.1 && docker-php-ext-enable xdebug
 
 # PECL Extensions swoole:
 ARG INSTALL_SWOOLE=false
