@@ -57,11 +57,15 @@ RUN docker-php-ext-install \
         pdo_mysql \
         mysqli \
         sockets \
+<<<<<<< HEAD
     && if [ ${PHP_VERSION} = "7.4" ]; then \
         docker-php-ext-configure gd --with-freetype --with-jpeg \
     else \
         docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include  \
     ;fi \
+=======
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+>>>>>>> d376425f1572f8edae2dd9a1b0143979b73c50dc
     && docker-php-ext-install gd
 
 
